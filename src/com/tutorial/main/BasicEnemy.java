@@ -2,12 +2,17 @@ package com.tutorial.main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class BasicEnemy extends GameObject{
 
-	public BasicEnemy(int x, int y, ID id) {
+	private Handler handler;
+	
+	public BasicEnemy(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 
+		this.handler = handler;
 		velX=5;
 		velY=5;
 
@@ -23,13 +28,23 @@ public class BasicEnemy extends GameObject{
 		
 		x = Game.clamp(x, 0, Game.WIDTH - 32);
 		y = Game.clamp(y, 0, Game.HEIGHT - 32);
+		
+		handler.addObject(new Trail(x,y, ID.Trail, Color.red, 16, 16, 0.1f, handler));
 	}
 
 	
 	public void render(Graphics g) {
+		
+		
 		g.setColor(Color.red);
 		g.fillRect(x, y, 16, 16);
 		
+	}
+
+
+
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, 16, 16);
 	}
 
 }
